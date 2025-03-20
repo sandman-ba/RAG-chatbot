@@ -3,7 +3,7 @@ from llama_index.core import PromptTemplate
 from transformers import AutoModelForSequenceClassification
 
 ranker_model = AutoModelForSequenceClassification.from_pretrained(
-    "./models/ranker-model",
+    "jinaai/jina-reranker-v2-base-multilingual",
     torch_dtype="auto",
     trust_remote_code=True,
 )

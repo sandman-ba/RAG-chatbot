@@ -1,3 +1,7 @@
+# Models and Tokenizers
+models/
+tokenizers/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

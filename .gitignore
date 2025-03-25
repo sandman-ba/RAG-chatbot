@@ -2,6 +2,9 @@
 models/
 tokenizers/
 
+# Database
+videogames.db
+
 # Pipfile and lock (we have different ones for nvidia and amd
 Pipfile
 Pipfile.lock

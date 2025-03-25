@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [[source]]
-url = "https://download.pytorch.org/whl/rocm6.2.4"
+url = "https://download.pytorch.org/whl/nightly/rocm6.2.4"
 verify_ssl = false
 name = "pytorch"
 

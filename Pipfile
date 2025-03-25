@@ -3,11 +3,6 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
-[[source]]
-url = "https://download.pytorch.org/whl/cu126"
-verify_ssl = false
-name = "pytorch"
-
 [packages]
 numpy = "*"
 polars = "*"
@@ -15,7 +10,11 @@ transformers = "*"
 datasets = "*"
 evaluate = "*"
 accelerate = "*"
-torch = {version="*", index="pytorch"}
+einops = "*"
+llama-index = "*"
+llama-index-postprocessor-jinaai-rerank = "*"
+huggingface-hub = {extras = ["inference"], version = "*"}
+llama-index-llms-huggingface-api = "*"
 
 [dev-packages]
 

@@ -1,13 +1,6 @@
-# Models and Tokenizers
+# Models and databases
 models/
-tokenizers/
-
-# Database
-videogames.db
-
-# Pipfile and lock (we have different ones for nvidia and amd
-Pipfile
-Pipfile.lock
+*.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

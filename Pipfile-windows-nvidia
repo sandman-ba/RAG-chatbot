@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [[source]]
-url = "https://download.pytorch.org/whl/cuXXX"
+url = "https://download.pytorch.org/whl/cu126"
 verify_ssl = false
 name = "pytorch"
 

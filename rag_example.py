@@ -1,30 +1,25 @@
 import getpass, sqlite3, json
 from typing import List, Tuple
-from llama_index.core import PromptTemplate
 from transformers import AutoModelForSequenceClassification
+from llama_index.core import PromptTemplate
 from llama_index.llms.huggingface_api import HuggingFaceInferenceAPI
-
-
-print("Paste your Hugging Face access token here: ")
-hf_token = getpass.getpass()
 
 data = "videogames.db"
 
+# Load Models and HF token
+print("Paste your Hugging Face access token here: ")
+hf_token = getpass.getpass()
 mistral_llm = HuggingFaceInferenceAPI(model_name="mistralai/Mixtral-8x7B-Instruct-v0.1", token=hf_token)
-
-
-
 ranker_model = AutoModelForSequenceClassification.from_pretrained(
     "jinaai/jina-reranker-v2-base-multilingual",
     torch_dtype="auto",
     trust_remote_code=True,
 )
-
 ranker_model.to("cuda")
 ranker_model.eval()
 
 
-table_declarations = [# TODO: Change to fit our data
+table_declarations = [
     "CREATE TABLE platform (\n\tid INTEGER PRIMARY KEY,\n\tplatform_name TEXT DEFAULT NULL\n);",
     "CREATE TABLE genre (\n\tid INTEGER PRIMARY KEY,\n\tgenre_name TEXT DEFAULT NULL\n);",
     "CREATE TABLE publisher (\n\tid INTEGER PRIMARY KEY,\n\tpublisher_name TEXT DEFAULT NULL\n);",
@@ -75,8 +70,6 @@ rag_prompt_tmpl = PromptTemplate(rag_prompt_tmpl_str)
 
 
 
-
-
 def rank_tables(query: str, table_specs: List[str], top_n: int = 0) -> List[Tuple[float, str]]:
     """
     Get sorted pairs of scores and table specifications, then return the top N,
@@ -89,6 +82,7 @@ def rank_tables(query: str, table_specs: List[str], top_n: int = 0) -> List[Tupl
     if top_n and top_n < len(scored_tables):
         return scored_tables[0:top_n]
     return scored_tables
+
 
 def answer_query(user_query: str) -> str:
     try:

@@ -15,6 +15,7 @@ llama-index = "*"
 llama-index-postprocessor-jinaai-rerank = "*"
 huggingface-hub = {extras = ["inference"], version = "*"}
 llama-index-llms-huggingface-api = "*"
+ninja = "*"
 
 [dev-packages]
 

@@ -1,3 +1,5 @@
+amdgpu.ids
+
 # Models and databases
 models/
 *.db

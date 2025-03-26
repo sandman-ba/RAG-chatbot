@@ -1,14 +1,33 @@
-import getpass, sqlite3, json
+import getpass, sqlite3, json, platform
 from typing import List, Tuple
 from transformers import AutoModelForSequenceClassification
 from llama_index.core import PromptTemplate
 from llama_index.llms.huggingface_api import HuggingFaceInferenceAPI
 
+# Data and Prompt
 data = "videogames.db"
+user_queries = [
+        "Identify the top 10 platforms by total sales.",
+        "Summarize sales by region.",
+        "List the publisher with the largest number of published games.",
+        "Display the year with most games released.",
+        "What is the most popular game genre on the Wii platform?",
+        "What is the most popular game genre of 2012?",
+]
+
 
 # Load Models and HF token
-print("Paste your Hugging Face access token here: ")
-hf_token = getpass.getpass()
+if platform.system() == 'Linux':
+    try:
+        hf_token = subprocess.run("/usr/bin/pass", "code/hugging-face/LLMsSBA", text=True, shell=True)
+        print("Successfully retrieved access token from password store:",hf_token)
+    except Exception as e:
+        print("Unable to retrieve access token from password store, enter it here:")
+        hf_token = getpass.getpass()
+else:
+    print("Paste your Hugging Face access token here: ")
+    hf_token = getpass.getpass()
+
 mistral_llm = HuggingFaceInferenceAPI(model_name="mistralai/Mixtral-8x7B-Instruct-v0.1", token=hf_token)
 ranker_model = AutoModelForSequenceClassification.from_pretrained(
     "jinaai/jina-reranker-v2-base-multilingual",
@@ -117,3 +136,8 @@ def answer_query(user_query: str) -> str:
     except Exception as e:
         print(f"Answer generation failed.\nPrompt:\n{rag_prompt}\n\n")
         raise(e)
+
+for query in user_queries:
+    print(f"User query:\n{query}")
+    response = answer_query(query)
+    print(f"AI response:\n{response}")

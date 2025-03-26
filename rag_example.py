@@ -1,4 +1,4 @@
-import getpass, sqlite3, json, platform
+import getpass, sqlite3, json, platform, subprocess
 from typing import List, Tuple
 from transformers import AutoModelForSequenceClassification
 from llama_index.core import PromptTemplate
@@ -19,10 +19,11 @@ user_queries = [
 # Load Models and HF token
 if platform.system() == 'Linux':
     try:
-        hf_token = subprocess.run("/usr/bin/pass", "code/hugging-face/LLMsSBA", text=True, shell=True)
-        print("Successfully retrieved access token from password store:",hf_token)
+        hf_token = subprocess.run(["pass", "code/hugging-face/LLMsSBA"], text=True, capture_output=True).stdout.strip()
+        print("Successfully retrieved access token from password store")
     except Exception as e:
-        print("Unable to retrieve access token from password store, enter it here:")
+        print("Unable to retrieve access token from password store. Error:", e)
+        print("\nPlease enter it here:")
         hf_token = getpass.getpass()
 else:
     print("Paste your Hugging Face access token here: ")
